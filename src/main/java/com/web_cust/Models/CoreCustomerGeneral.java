@@ -17,10 +17,10 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "core_customer_general")
 public class CoreCustomerGeneral {
-	@Id
+	
 	@Column(name="ccust_reg_id", nullable = false)
 	private BigDecimal ccustRegId;
-	
+	@Id
 	@Column(name="ccust_no", length=20, nullable = false)
 	private String ccustNo;
 	

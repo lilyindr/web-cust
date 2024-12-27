@@ -10,12 +10,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import com.web_cust.Models.CoreCustomerGeneral;
 
 @Repository
-public interface ICoreCustomerGeneralRepository extends JpaRepository<CoreCustomerGeneral, String>{
+public interface CoreCustomerGeneralRepository extends JpaRepository<CoreCustomerGeneral, String>{
 	//@Query("select s.glCcDesc from GlCcMaster s where s.glCcCode=?1")
 	//public String getGlCcMstDesc(String glCcCode);
 	@Procedure(procedureName = "p_check_login")
 	public String exeCheckLogin(String userid , String userpass,  String macaddress, String pmsg);	
-	
-	
-	
+
 }
