@@ -70,6 +70,9 @@ public class CoreCustomerRegistration {
 	@Column(name="ccreg_area", length=60)
 	private String ccregArea;
 	
+	@Column(name="ccreg_zip", length=6)
+	private String ccregZip;	
+	
 	@Column(name="ccreg_mobile_phone", length=60)
 	private String ccregMobilePhone;
 	
