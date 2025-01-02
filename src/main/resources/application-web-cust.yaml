@@ -3,9 +3,9 @@ spring:
     hikari:
       maximumPoolSize: 1
     driver-class-name: org.postgresql.Driver
-    url:  jdbc:postgresql://localhost:5432/postgres?currentSchema=adminscheme
+    url:  jdbc:postgresql://localhost:5432/postgres?currentSchema=irasia
     username: postgres
-    password: d0d0l
+    password: admin123
   jpa:    
     generate-ddl: true
     hibernate:
@@ -15,4 +15,4 @@ spring:
     init:
       mode: always
       continue-on-error: true
-      platform: postgres	
+      platform: postgres
