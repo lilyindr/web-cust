@@ -16,3 +16,14 @@ spring:
       mode: always
       continue-on-error: true
       platform: postgres
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: tulalit053@gmail.com
+    password: feaw ckfz nsgo ldsf
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

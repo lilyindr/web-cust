@@ -14,7 +14,11 @@ public interface ICoreCustomerGeneralRepository extends JpaRepository<CoreCustom
 	//@Query("select s.glCcDesc from GlCcMaster s where s.glCcCode=?1")
 	//public String getGlCcMstDesc(String glCcCode);
 	@Procedure(procedureName = "p_check_login")
-	public String exeCheckLogin(String userid , String userpass,  String macaddress, String pmsg);	
+	public String exeCheckLogin(String userid , String userpass,  String macaddress, String pmsg);
+	
+	
+	
+	
 	
 	
 	
