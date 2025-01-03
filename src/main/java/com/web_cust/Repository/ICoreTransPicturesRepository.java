@@ -8,7 +8,5 @@ import com.web_cust.Models.CoreTransPicturesCompKey;
 
 @Repository
 public interface ICoreTransPicturesRepository extends JpaRepository<CoreTransPictures,CoreTransPicturesCompKey>{
-	
-	
 
 }

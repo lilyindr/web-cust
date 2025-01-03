@@ -16,7 +16,7 @@ public class ControllerCoreTransPictures {
 	ServiceCoreTransPictures servCtpic;
 	
 	@GetMapping("/webcust/getCtpicListAll")
-	public List<CoreTransPictures> getPicturesListAll(){
+	public List<CoreTransPictures> getCtpicListAll(){
 		return servCtpic.getCtpicListAll();
 	}
 

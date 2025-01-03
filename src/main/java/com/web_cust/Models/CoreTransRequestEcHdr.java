@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "core_trans_request_ec_hdr")
 public class CoreTransRequestEcHdr {
