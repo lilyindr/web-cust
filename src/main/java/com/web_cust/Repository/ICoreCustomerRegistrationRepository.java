@@ -12,5 +12,6 @@ import com.web_cust.Models.CoreCustomerRegistration;
 
 @Repository
 public interface ICoreCustomerRegistrationRepository  extends JpaRepository<CoreCustomerRegistration, Integer>{
-
+	@Procedure(procedureName = "get_otp")
+	public String exeGetOTP();
 }
