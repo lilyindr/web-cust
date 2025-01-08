@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web_cust.Models.CoreTransRequestEcHdr;
@@ -18,6 +20,11 @@ public class ControllerCoreTransRequestEcHdr {
 	@GetMapping("/webcust/getCtechListAll")
 	public List<CoreTransRequestEcHdr> getReqEcHdrListAll(){
 		return servCtech.getCtechListAll();
+	}
+	
+	@PostMapping("/webcust/saveupdreqechdr")
+	public String saveUpdateReqEcHdr(@RequestBody CoreTransRequestEcHdr ReqEcHdr) {
+		return servCtech.saveUpdateReqEcHdr(ReqEcHdr);	
 	}
 
 }

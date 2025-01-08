@@ -17,5 +17,10 @@ public class ServiceCoreTransRequestEcHdr {
 	public List<CoreTransRequestEcHdr> getCtechListAll(){
 		return repoCtech.findAll();
 	}
+	
+	public String saveUpdateReqEcHdr(CoreTransRequestEcHdr ReqEcHdr) {
+		repoCtech.save(ReqEcHdr);
+		return "Submit Successfully";
+	}
 
 }

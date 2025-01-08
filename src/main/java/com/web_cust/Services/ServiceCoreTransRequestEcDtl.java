@@ -21,5 +21,10 @@ public class ServiceCoreTransRequestEcDtl {
 	public List<CoreTransRequestEcDtl> getCtecdListByCtechId(String CtechId){
 		return repoCtecd.findByctecdCtechId(CtechId);
 	}
+	
+	public String saveUpdateReqEcDtl(CoreTransRequestEcDtl ReqEcDtl) {
+		repoCtecd.save(ReqEcDtl);
+		return "Submit Successfully";
+	}
 
 }
