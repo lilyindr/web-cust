@@ -22,5 +22,9 @@ public class ServiceCoreTransRequestEcHdr {
 		repoCtech.save(ReqEcHdr);
 		return "Submit Successfully";
 	}
+	
+	public List<CoreTransRequestEcHdr> getCtechListByCtechStatus(String CtechSts){
+		return repoCtech.findByCtechStatus(CtechSts);
+	}
 
 }

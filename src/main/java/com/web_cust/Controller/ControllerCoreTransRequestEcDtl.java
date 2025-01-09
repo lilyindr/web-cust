@@ -31,5 +31,10 @@ public class ControllerCoreTransRequestEcDtl {
 	public String saveUpdateReqEcDtl(@RequestBody CoreTransRequestEcDtl ReqEcDtl) {
 		return servCtecd.saveUpdateReqEcDtl(ReqEcDtl);	
 	}
+	
+	@GetMapping("/webcust/getCtecdListByStatus")
+	public List<CoreTransRequestEcDtl> getCtecdListByCtecdStatus(String CtecdSts){
+		return servCtecd.getCtecdListByCtecdStatus(CtecdSts);
+	}
 
 }

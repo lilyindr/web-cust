@@ -26,5 +26,9 @@ public class ServiceCoreTransRequestEcDtl {
 		repoCtecd.save(ReqEcDtl);
 		return "Submit Successfully";
 	}
+	
+	public List<CoreTransRequestEcDtl> getCtecdListByCtecdStatus(String CtecdSts){
+		return repoCtecd.findByCtecdStatus(CtecdSts);
+	}
 
 }

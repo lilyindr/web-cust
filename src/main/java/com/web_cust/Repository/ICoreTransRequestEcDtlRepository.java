@@ -11,5 +11,7 @@ import com.web_cust.Models.CoreTransRequestEcDtlCompKey;
 public interface ICoreTransRequestEcDtlRepository extends JpaRepository<CoreTransRequestEcDtl,CoreTransRequestEcDtlCompKey>{
 	
 	public List<CoreTransRequestEcDtl> findByctecdCtechId(String CtechId);
+	
+	public List<CoreTransRequestEcDtl> findByCtecdStatus(String CtecdSts);
 
 }

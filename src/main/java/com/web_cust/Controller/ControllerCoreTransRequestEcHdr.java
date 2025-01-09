@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web_cust.Models.CoreTransRequestEcDtl;
 import com.web_cust.Models.CoreTransRequestEcHdr;
 import com.web_cust.Services.ServiceCoreTransRequestEcHdr;
 
@@ -25,6 +26,11 @@ public class ControllerCoreTransRequestEcHdr {
 	@PostMapping("/webcust/saveupdreqechdr")
 	public String saveUpdateReqEcHdr(@RequestBody CoreTransRequestEcHdr ReqEcHdr) {
 		return servCtech.saveUpdateReqEcHdr(ReqEcHdr);	
+	}
+	
+	@GetMapping("/webcust/getCtechListByStatus")
+	public List<CoreTransRequestEcHdr> getCtechListByCtechStatus(String CtechSts){
+		return servCtech.getCtechListByCtechStatus(CtechSts);
 	}
 
 }
