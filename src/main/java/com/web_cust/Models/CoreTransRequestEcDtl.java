@@ -2,8 +2,10 @@ package com.web_cust.Models;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
@@ -29,13 +31,13 @@ public class CoreTransRequestEcDtl {
 	private String ctecdId;
 	
 	@Column(name="ctecd_product_code")
-	private Integer ctecdProductCode;
+	private String ctecdProductCode;
 	
 	@Column(name="ctecd_product_name", length=60)
 	private String ctecdProductName;
 	
 	@Column(name="ctecd_producttype_code")
-	private Integer ctecdProducttypeCode;
+	private String ctecdProducttypeCode;
 	
 	@Column(name="ctecd_producttype_name", length=60)
 	private String ctecdProducttypeName;
@@ -153,5 +155,7 @@ public class CoreTransRequestEcDtl {
 	
 	@Column(name="ctecd_img4_ctpic_seq_no")
 	private Integer ctecdImg4CtpicSeqNo;
+	
+
 
 }

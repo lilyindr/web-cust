@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class ControllerCoreCustomerRegistration {
 	@Autowired
 	ServiceCoreCustomerRegistration servccReg;
@@ -56,5 +57,10 @@ public class ControllerCoreCustomerRegistration {
 		 sendEmail(to, subject, text);
 	        return otp;
 	    }
+	
+	@GetMapping("/reg/getregid")
+	public int getRegId() {
+		return servccReg.getRegId();
+	}
 	
 }

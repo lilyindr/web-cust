@@ -29,6 +29,10 @@ public class ServiceCoreCustomerRegistration {
 		return repoccReg.exeGetOTP();
 	}
 	
+	public int getRegId() {
+		return repoccReg.getRegId();
+	}
+	
    
 	
 }

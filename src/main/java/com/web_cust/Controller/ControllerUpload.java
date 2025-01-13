@@ -25,19 +25,25 @@ public class ControllerUpload {
         }
     }
 	
-	@PostMapping ("file/upload")
+	@PostMapping ("file/RegisUpload")
 	public ResponseEntity<String> UploadFile(@RequestParam("dirname") String dirname, @RequestParam("file") MultipartFile file){
 		
 		if (file.isEmpty()) {
 			return new ResponseEntity<>("file is Empty :", HttpStatus.BAD_REQUEST);
 		}
 		
+		String filepath = "D:\\iasia\\UI\\IMAGES\\REGISTRATIONS\\" + dirname ;
 		//String dirname = "test456";
+		File directory = new File(filepath);
+		
 		try {
-            createDirectory("D:\\iasia\\UI\\IMAGES\\"+dirname); 
-        } catch (Exception e) {
+			if (!directory.exists()) {
+				createDirectory("D:\\iasia\\UI\\IMAGES\\REGISTRATIONS\\"+dirname);
+			}
+	    } catch (Exception e) {
             // Handle the exception (e.g., log it or throw a custom exception)
         }
+		
 		
 		try {
 			
@@ -46,7 +52,7 @@ public class ControllerUpload {
 					"file sizw :"+file.getSize()+
 					"Content Type :"+file.getContentType());		
 			
-			String filepath ="D:\\iasia\\UI\\IMAGES\\"+dirname+"\\";
+			//String filepath ="D:\\iasia\\UI\\IMAGES\\REGISTRATIONS\\"+dirname+"\\";
 			
 			File file1 = new File(filepath +File.separator+file.getOriginalFilename());
 			
