@@ -4,9 +4,11 @@ import java.nio.file.Files;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,11 +26,17 @@ import java.util.List;
 import com.web_cust.Models.CoreTransRequestEcDtl;
 import com.web_cust.Repository.ICoreTransRequestEcDtlRepository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.ParameterMode;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.StoredProcedureQuery;
+
 @Service
 public class ServiceCoreTransRequestEcDtl {
 	
 	@Autowired
 	ICoreTransRequestEcDtlRepository repoCtecd;
+	String msg;
 	
 	public List<CoreTransRequestEcDtl> getCtecdListAll(){
 		return repoCtecd.findAll();
@@ -62,25 +70,25 @@ public class ServiceCoreTransRequestEcDtl {
 		if (file1 != null && !file1.isEmpty()) {
 		String filename = storeFile(file1, filepath, data, userid, NoRequest);
 		data.setCtecdProdTypeImg1Filename(filename);
-		data.setCtecdProdTypeImg1Filepath(this.rootLocation.resolve(filename).toString());
+		data.setCtecdProdTypeImg1Filepath(this.rootLocation.resolve(userid).resolve("REQUEST").resolve(NoRequest).resolve(filename).toString());
 		}
 		
 		if (file2 != null && !file2.isEmpty()) {
 			String filename = storeFile(file2, filepath, data, userid, NoRequest);
 			data.setCtecdProdTypeImg2Filename(filename);
-			data.setCtecdProdTypeImg2Filepath(this.rootLocation.resolve(filename).toString());
+			data.setCtecdProdTypeImg2Filepath(this.rootLocation.resolve(userid).resolve("REQUEST").resolve(NoRequest).resolve(filename).toString());
 			}
 		
 		if (file3 != null && !file3.isEmpty()) {
 			String filename = storeFile(file3, filepath, data, userid, NoRequest);
 			data.setCtecdProdTypeImg1Filename(filename);
-			data.setCtecdProdTypeImg1Filepath(this.rootLocation.resolve(filename).toString());
+			data.setCtecdProdTypeImg1Filepath(this.rootLocation.resolve(userid).resolve("REQUEST").resolve(NoRequest).resolve(filename).toString());
 			}
 		
 		if (file4 != null && !file4.isEmpty()) {
 			String filename = storeFile(file4, filepath, data, userid, NoRequest);
 			data.setCtecdProdTypeImg1Filename(filename);
-			data.setCtecdProdTypeImg1Filepath(this.rootLocation.resolve(filename).toString());
+			data.setCtecdProdTypeImg1Filepath(this.rootLocation.resolve(userid).resolve("REQUEST").resolve(NoRequest).resolve(filename).toString());
 			}
 		// ... (simpan file 2 sampai 4 dengan logika yang sama)
 		
@@ -91,6 +99,30 @@ public class ServiceCoreTransRequestEcDtl {
 		 
 		 return repoCtecd.exeGetReqNo();
 	 }
+	 
+	 
+	// public String callStoredProcedure(String usercode, String reqno) {
+	//        String pmsg = ""; // Initial value for pmsg
+	//        String result = repoCtecd.getrequestecwebpiw(usercode, reqno, pmsg);
+	//        return result; 
+	//    }
+	 
+	 @PersistenceContext
+	    private EntityManager entityManager;
+
+	    @Transactional
+	    public String callStoredProcedure(String usercode, String reqno) {
+	        String pmsg = "";
+	        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("webscheme.getrequestecwebpiw");
+	        query.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
+	        query.registerStoredProcedureParameter(2, String.class, ParameterMode.IN);
+	        query.registerStoredProcedureParameter(3, String.class, ParameterMode.OUT);
+	        query.setParameter(1, usercode);
+	        query.setParameter(2, reqno);
+	        query.setParameter(3, pmsg);
+	        query.execute();
+	        return (String) query.getOutputParameterValue(3);
+	    }
 	
 	 public void createDirectory(String directoryPath) {
 	        File directory = new File(directoryPath);
