@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -37,13 +38,14 @@ public class ServiceCoreTransRequestEcDtl {
 	@Autowired
 	ICoreTransRequestEcDtlRepository repoCtecd;
 	String msg;
+	 private final Path rootLocation = Paths.get("D:\\iasia\\UI\\IMAGES");
 	
 	public List<CoreTransRequestEcDtl> getCtecdListAll(){
 		return repoCtecd.findAll();
 	}
 	
 	public List<CoreTransRequestEcDtl> getCtecdListByCtechId(String CtechId){
-		return repoCtecd.findByctecdCtechId(CtechId);
+		return repoCtecd.findByCtecdCtechId(CtechId);
 	}
 	
 	public String saveUpdateReqEcDtl(CoreTransRequestEcDtl ReqEcDtl) {
@@ -81,14 +83,14 @@ public class ServiceCoreTransRequestEcDtl {
 		
 		if (file3 != null && !file3.isEmpty()) {
 			String filename = storeFile(file3, filepath, data, userid, NoRequest);
-			data.setCtecdProdTypeImg1Filename(filename);
-			data.setCtecdProdTypeImg1Filepath(this.rootLocation.resolve(userid).resolve("REQUEST").resolve(NoRequest).resolve(filename).toString());
+			data.setCtecdProdTypeImg3Filename(filename);
+			data.setCtecdProdTypeImg3Filepath(this.rootLocation.resolve(userid).resolve("REQUEST").resolve(NoRequest).resolve(filename).toString());
 			}
 		
 		if (file4 != null && !file4.isEmpty()) {
 			String filename = storeFile(file4, filepath, data, userid, NoRequest);
-			data.setCtecdProdTypeImg1Filename(filename);
-			data.setCtecdProdTypeImg1Filepath(this.rootLocation.resolve(userid).resolve("REQUEST").resolve(NoRequest).resolve(filename).toString());
+			data.setCtecdProdTypeImg4Filename(filename);
+			data.setCtecdProdTypeImg4Filepath(this.rootLocation.resolve(userid).resolve("REQUEST").resolve(NoRequest).resolve(filename).toString());
 			}
 		// ... (simpan file 2 sampai 4 dengan logika yang sama)
 		
@@ -131,8 +133,44 @@ public class ServiceCoreTransRequestEcDtl {
 	        }
 	    }
 	 
-	 private final Path rootLocation = Paths.get("D:\\iasia\\UI\\IMAGES");
+	   public String update(String id, String userid, String NoRequest, CoreTransRequestEcDtl data, MultipartFile file1, MultipartFile file2, MultipartFile file3, MultipartFile file4) throws IOException {
+	       // CoreTransRequestEcDtl existingData = repository.findById(id).orElse(null);
+	       
+		   String filepath = "D:\\iasia\\UI\\IMAGES\\"+userid+"\\"+NoRequest ; 
+		   
+	            if (file1 != null && !file1.isEmpty()) {
+	        		String filename = storeFile(file1, filepath, data, userid, NoRequest);
+	        		data.setCtecdProdTypeImg1Filename(filename);
+	        		data.setCtecdProdTypeImg1Filepath(this.rootLocation.resolve(userid).resolve("REQUEST").resolve(NoRequest).resolve(filename).toString());
+	        	}
+	            
+	            if (file2 != null && !file2.isEmpty()) {
+	        		String filename = storeFile(file2, filepath, data, userid, NoRequest);
+	        		data.setCtecdProdTypeImg1Filename(filename);
+	        		data.setCtecdProdTypeImg1Filepath(this.rootLocation.resolve(userid).resolve("REQUEST").resolve(NoRequest).resolve(filename).toString());
+	        	}
+	            
+	            if (file3 != null && !file3.isEmpty()) {
+	        		String filename = storeFile(file3, filepath, data, userid, NoRequest);
+	        		data.setCtecdProdTypeImg1Filename(filename);
+	        		data.setCtecdProdTypeImg1Filepath(this.rootLocation.resolve(userid).resolve("REQUEST").resolve(NoRequest).resolve(filename).toString());
+	        	}
+	            
+	            if (file4 != null && !file4.isEmpty()) {
+	        		String filename = storeFile(file4, filepath, data, userid, NoRequest);
+	        		data.setCtecdProdTypeImg1Filename(filename);
+	        		data.setCtecdProdTypeImg1Filepath(this.rootLocation.resolve(userid).resolve("REQUEST").resolve(NoRequest).resolve(filename).toString());
+	        	}
 
+	             repoCtecd.save(data);
+	             return "Submit Successfully";
+	    }
+	   
+	   public String delete(String ctih,  String ctid) { 
+	    	repoCtecd.deleteRequestDtl(ctih, ctid); 
+	        return "Submit Successfully";
+	    }	 
+	
 	 private String storeFile(MultipartFile file, String filepath, CoreTransRequestEcDtl data, String userid, String Noreq) throws IOException {
 	     String filename = file.getOriginalFilename();
 

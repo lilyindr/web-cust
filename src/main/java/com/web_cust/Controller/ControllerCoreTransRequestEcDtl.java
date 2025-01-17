@@ -57,6 +57,7 @@ public class ControllerCoreTransRequestEcDtl {
 		 	String temp2 = execRequestPic ( userid,  temp);
 		 	System.out.println("no hedr :"+temp2);
 		 	System.out.println(" no request :"+temp);
+		 	data.setCtecdCtechId(temp);
 	        CoreTransRequestEcDtl createdData = servCtecd.create(data, temp, userid, file1, file2, file3, file4);
 	        System.out.println(" no dtl :");
 	       return temp;
@@ -73,7 +74,24 @@ public class ControllerCoreTransRequestEcDtl {
 	 }
 	
 
-
+	@GetMapping("/webcust/DeleteRequestPic")
+	 public String deleteRequestPic ( @RequestParam String ctih,  @RequestParam String ctid) {		 
+		 return servCtecd.delete(ctih, ctid);
+	 }
+	
+	
+	@GetMapping("/webcust/UpdateRequest")
+	 public String UpdateRequest (@RequestParam String id, 
+				 	@RequestParam String userid, 
+				 	@RequestParam String  NoRequest,
+		            @RequestPart("data") CoreTransRequestEcDtl data,
+		            @RequestPart(value = "file1", required = false) MultipartFile file1,
+		            @RequestPart(value = "file2", required = false) MultipartFile file2,
+		            @RequestPart(value = "file3", required = false) MultipartFile file3,
+		            @RequestPart(value = "file4", required = false) MultipartFile file4) 
+		            		throws IOException {
+		 return servCtecd.update(id, userid, NoRequest, data, file1, file2, file3, file4);
+	 }
 	  
 	
 	
@@ -101,6 +119,7 @@ public class ControllerCoreTransRequestEcDtl {
 	            .body(imageBytes); 
 	}
 	
+	
 	@GetMapping(value = "/images/{custNo}/REQUEST/{requstno}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<String>> getAllImagesInRequest(@PathVariable String custNo, @PathVariable String requstno) throws IOException {
 		//System.out.println("bbbbbbbb");
@@ -112,7 +131,6 @@ public class ControllerCoreTransRequestEcDtl {
 	                .filter(Files::isRegularFile)
 	                .map(path -> baseUrl + '/' +path.getFileName().toString()) // Buat URL lengkap
 	                .collect(Collectors.toList());
-
 	        return ResponseEntity.ok(imageUrls);
 	    } else {
 	        return ResponseEntity.notFound().build();

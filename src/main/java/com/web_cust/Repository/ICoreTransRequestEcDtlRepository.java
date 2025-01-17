@@ -26,12 +26,17 @@ import jakarta.persistence.StoredProcedureQuery;
 public interface ICoreTransRequestEcDtlRepository extends JpaRepository<CoreTransRequestEcDtl,CoreTransRequestEcDtlCompKey>{
 
 	 
-	public List<CoreTransRequestEcDtl> findByctecdCtechId(String CtechId);
+	public List<CoreTransRequestEcDtl> findByCtecdCtechId(String CtechId);
 	
 	public List<CoreTransRequestEcDtl> findByCtecdStatus(String CtecdSts);
 	
 	@Procedure(procedureName = "getRequestECWebNo")
 	public String exeGetReqNo();
+	
+	@Modifying
+	@Query(value="delete from webscheme.core_trans_request_ec_dtl b where b.ctecd_ctech_id=1 and b.ctecd_id =2", nativeQuery=true)
+	void deleteRequestDtl(String ctih,  String ctid);
+	
 	
 	//@Transactional
    // @Modifying
