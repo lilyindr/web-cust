@@ -48,6 +48,10 @@ public class ServiceCoreTransRequestEcDtl {
 		return repoCtecd.findByCtecdCtechId(CtechId);
 	}
 	
+	public List<CoreTransRequestEcDtl> getCtecdListByCtechIdAndCtecdId(String CtechId, String CtecdId){
+		return repoCtecd.findByCtecdCtechIdAndCtecdId(CtechId, CtecdId);
+	}
+	
 	public String saveUpdateReqEcDtl(CoreTransRequestEcDtl ReqEcDtl) {
 		repoCtecd.save(ReqEcDtl);
 		return "Submit Successfully";
@@ -142,24 +146,25 @@ public class ServiceCoreTransRequestEcDtl {
 	        		String filename = storeFile(file1, filepath, data, userid, NoRequest);
 	        		data.setCtecdProdTypeImg1Filename(filename);
 	        		data.setCtecdProdTypeImg1Filepath(this.rootLocation.resolve(userid).resolve("REQUEST").resolve(NoRequest).resolve(filename).toString());
-	        	}
+	        	   
+	            }
 	            
 	            if (file2 != null && !file2.isEmpty()) {
 	        		String filename = storeFile(file2, filepath, data, userid, NoRequest);
-	        		data.setCtecdProdTypeImg1Filename(filename);
-	        		data.setCtecdProdTypeImg1Filepath(this.rootLocation.resolve(userid).resolve("REQUEST").resolve(NoRequest).resolve(filename).toString());
+	        		data.setCtecdProdTypeImg2Filename(filename);
+	        		data.setCtecdProdTypeImg2Filepath(this.rootLocation.resolve(userid).resolve("REQUEST").resolve(NoRequest).resolve(filename).toString());
 	        	}
 	            
 	            if (file3 != null && !file3.isEmpty()) {
 	        		String filename = storeFile(file3, filepath, data, userid, NoRequest);
-	        		data.setCtecdProdTypeImg1Filename(filename);
-	        		data.setCtecdProdTypeImg1Filepath(this.rootLocation.resolve(userid).resolve("REQUEST").resolve(NoRequest).resolve(filename).toString());
+	        		data.setCtecdProdTypeImg3Filename(filename);
+	        		data.setCtecdProdTypeImg3Filepath(this.rootLocation.resolve(userid).resolve("REQUEST").resolve(NoRequest).resolve(filename).toString());
 	        	}
 	            
 	            if (file4 != null && !file4.isEmpty()) {
 	        		String filename = storeFile(file4, filepath, data, userid, NoRequest);
-	        		data.setCtecdProdTypeImg1Filename(filename);
-	        		data.setCtecdProdTypeImg1Filepath(this.rootLocation.resolve(userid).resolve("REQUEST").resolve(NoRequest).resolve(filename).toString());
+	        		data.setCtecdProdTypeImg4Filename(filename);
+	        		data.setCtecdProdTypeImg4Filepath(this.rootLocation.resolve(userid).resolve("REQUEST").resolve(NoRequest).resolve(filename).toString());
 	        	}
 
 	             repoCtecd.save(data);

@@ -28,6 +28,8 @@ public interface ICoreTransRequestEcDtlRepository extends JpaRepository<CoreTran
 	 
 	public List<CoreTransRequestEcDtl> findByCtecdCtechId(String CtechId);
 	
+	public List<CoreTransRequestEcDtl> findByCtecdCtechIdAndCtecdId(String CtechId, String CtecdId);
+	
 	public List<CoreTransRequestEcDtl> findByCtecdStatus(String CtecdSts);
 	
 	@Procedure(procedureName = "getRequestECWebNo")

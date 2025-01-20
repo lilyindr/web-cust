@@ -24,12 +24,19 @@ import java.util.List;
 import com.web_cust.Models.CoreTransRequestEcDtl;
 import com.web_cust.Services.ServiceCoreTransRequestEcDtl;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+
+
+
 
 @RestController
 public class ControllerCoreTransRequestEcDtl {
 	
 	@Autowired
 	ServiceCoreTransRequestEcDtl servCtecd;
+	 @Autowired
+	    private EntityManager entityManager;
 	
 	String msg;
 	String p_msg;
@@ -42,6 +49,11 @@ public class ControllerCoreTransRequestEcDtl {
 	@GetMapping("/webcust/getCtecdListByCtechId")
 	public List<CoreTransRequestEcDtl> getCtecdListByCtechId(String CtechId){
 		return servCtecd.getCtecdListByCtechId(CtechId);
+	}
+	
+	@GetMapping("/webcust/getCtecdListByCtechIdAndCtecdId")
+	public List<CoreTransRequestEcDtl> getCtecdListByCtechIdAndCtecdId(String CtechId, String CtecdId){
+		return servCtecd.getCtecdListByCtechIdAndCtecdId(CtechId, CtecdId);
 	}
 	
 	@PostMapping("/webcust/saveupdreqecdtl")	
@@ -80,7 +92,7 @@ public class ControllerCoreTransRequestEcDtl {
 	 }
 	
 	
-	@GetMapping("/webcust/UpdateRequest")
+	@PostMapping("/webcust/UpdateRequest")
 	 public String UpdateRequest (@RequestParam String id, 
 				 	@RequestParam String userid, 
 				 	@RequestParam String  NoRequest,
@@ -119,7 +131,38 @@ public class ControllerCoreTransRequestEcDtl {
 	            .body(imageBytes); 
 	}
 	
+	@GetMapping(value = "/images/{custNo}/REQUEST/{requestno}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<String>> getAllImagesInRequest(@PathVariable String custNo, @PathVariable String requestno, @RequestParam String no ) throws IOException {
+	    // 1. Ambil data filename dari database
+	    String sql = "SELECT ctecd_prod_type_img1_filename, ctecd_prod_type_img1_filepath, " +
+	                 "ctecd_prod_type_img2_filename, ctecd_prod_type_img2_filepath, " +
+	                 "ctecd_prod_type_img3_filename, ctecd_prod_type_img3_filepath, " +
+	                 "ctecd_prod_type_img4_filename, ctecd_prod_type_img4_filepath " +
+	                 "FROM webscheme.core_trans_request_ec_dtl WHERE ctecd_ctech_id = :requestno and ctecd_id='" + no + "'";
+	    Query query = entityManager.createNativeQuery(sql);
+	    query.setParameter("requestno", requestno);
+	    Object[] result = (Object[]) query.getSingleResult();
+	    List<String> imageUrls = new ArrayList<>();
+	    String baseUrl = "http://localhost:8091/wc-svc/images/" + custNo + "/REQUEST/" + requestno + "/";
+
+	    for (int i = 0; i < result.length; i += 2) {  // Increment i by 2
+	        String filename = (String) result[i];
+	        String filepath = (String) result[i + 1];
+	        if (filename != null && !filename.isEmpty() && filepath != null && !filepath.isEmpty()) {
+	            Path imagePath = Paths.get("D:\\iasia\\UI\\IMAGES", custNo, "REQUEST", requestno);
+	            if (Files.exists(imagePath)) {
+	                imageUrls.add(baseUrl  + filename);
+	            }
+	        }
+	    }
+	    if (!imageUrls.isEmpty()) {
+	        return ResponseEntity.ok(imageUrls);
+	    } else {
+	        return ResponseEntity.notFound().build();
+	    }
+	}
 	
+	/*
 	@GetMapping(value = "/images/{custNo}/REQUEST/{requstno}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<String>> getAllImagesInRequest(@PathVariable String custNo, @PathVariable String requstno) throws IOException {
 		//System.out.println("bbbbbbbb");
@@ -135,7 +178,7 @@ public class ControllerCoreTransRequestEcDtl {
 	    } else {
 	        return ResponseEntity.notFound().build();
 	    }
-	}
+	}*/
 	
 	
 	
