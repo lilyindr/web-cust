@@ -36,7 +36,7 @@ public class ControllerCoreTransRequestEcDtl {
 	@Autowired
 	ServiceCoreTransRequestEcDtl servCtecd;
 	 @Autowired
-	    private EntityManager entityManager;
+	 private EntityManager entityManager;
 	
 	String msg;
 	String p_msg;
