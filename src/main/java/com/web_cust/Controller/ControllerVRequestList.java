@@ -1,4 +1,5 @@
 package com.web_cust.Controller;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.web_cust.Models.VRequestList;
+import com.web_cust.Services.ProcedureResponse;
 import com.web_cust.Services.ServiceVRequestList;
 
 
@@ -38,5 +40,11 @@ public class ControllerVRequestList {
 	@GetMapping("/webcust/getVReqByRequest")
 	public List<VRequestList> getRequestByRequst (String req){
 		return servVrl.getRequestByRequst(req);
+	}
+	
+	@GetMapping("/webcust/SendReqToWeb")
+	public ProcedureResponse ReqToWeb(String p_reqno, String p_user) throws FileNotFoundException {
+		String msg=null;
+		 return servVrl.ReqToWeb(p_reqno, p_user);
 	}
 }

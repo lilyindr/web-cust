@@ -19,6 +19,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.web_cust.Models.VRequestList;
 import com.web_cust.Repository.IVRequestListRepository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.ParameterMode;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.StoredProcedureQuery;
+
 
 
 
@@ -38,6 +43,29 @@ public class ServiceVRequestList {
 	public List<VRequestList> getRequestByRequst (String req){
 		return repoVrl.findByVrlReqno(req);
 	}
+	
+	@PersistenceContext
+    private EntityManager entityManager;
+	
+	public ProcedureResponse ReqToWeb(String p_reqno, String p_user) {
+		//String passEnc = passwordEncoder.encode(userPass);
+		String pmsg = "";
+		//System.out.println("sssssssssss :"+passEnc);
+	    StoredProcedureQuery query = entityManager.createStoredProcedureQuery("adminscheme.p_procreq_toweb");
+	    query.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
+	    query.registerStoredProcedureParameter(2, String.class, ParameterMode.IN);
+	    query.registerStoredProcedureParameter(3, String.class, ParameterMode.OUT);
+	    query.registerStoredProcedureParameter(4, String.class, ParameterMode.OUT);
+	    query.setParameter(1, p_reqno);
+	    query.setParameter(2, p_user);
+	    query.execute();
+	    String vresult = (String) query.getOutputParameterValue(3);
+	    String vmessage = (String) query.getOutputParameterValue(4);
+	    System.out.println("result :"+vresult +'/'+"pmessage:"+vmessage);
+	    return new ProcedureResponse(vresult, vmessage);
+	    
+
+}
 	
 	
 }
